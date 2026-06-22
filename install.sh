@@ -43,9 +43,9 @@ read -rp "Confirmar (SI/NO): " CONFIRM
 PS3="Selecciona distribución: "
 select DISTRO in "Arch" "Gentoo" "Debian"; do
     case $DISTRO in
-        Arch)   ./arch.sh "$DISK"; break ;;
-        Gentoo) ./gentoo.sh "$DISK"; break ;;
-        Debian) ./debian.sh "$DISK"; break ;;
+        Arch)   ./distros/arch.sh "$DISK"; break ;;
+        Gentoo) ./distros/gentoo.sh "$DISK"; break ;;
+        Debian) ./distros/debian.sh "$DISK"; break ;;
         *) echo "Opción no válida."; exit 1 ;;
     esac
 done
