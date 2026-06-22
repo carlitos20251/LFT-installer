@@ -49,5 +49,12 @@ select DISTRO in "Arch" "Gentoo" "Debian"; do
         *) echo "Opción no válida."; exit 1 ;;
     esac
 done
+rm /mnt/etc/os-release
+cat > /mnt/etc/os-release << EOF
+NAME="Linux From Tallbar"
+PRETTY_NAME="LFT Beta 1.1 RC1 ($DISTRO Backend)"
+ID=lft
+VERSION_ID="1.1"
+EOF
 
 echo -e "\n[+] Instalación completada. Reinicia el sistema."
