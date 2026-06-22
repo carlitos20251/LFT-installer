@@ -30,5 +30,5 @@ debootstrap --arch=amd64 bullseye /mnt http://deb.debian.org/debian/
 genfstab -U /mnt >> /mnt/etc/fstab
 chroot /mnt /bin/bash -c "
     apt update && apt install fastfetch
-    echo 'root:toor | chpasswd
+    echo 'root:toor' | chpasswd
 "
