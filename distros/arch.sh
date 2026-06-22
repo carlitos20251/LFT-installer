@@ -30,8 +30,10 @@ BOOTSTRAP_URL="https://elmirror.cl/archlinux/iso/latest/archlinux-bootstrap-x86_
 cd /tmp
 wget -q --show-progress "$BOOTSTRAP_URL" -O arch-bootstrap.tar.gz
 echo -e "\n[+] Extrayendo bootstrap en /mnt..."
-tar -xzf arch-bootstrap.tar.gz -C /mnt --strip-components=1
+tar -zstd arch-bootstrap-x86_64.tar.zst -C /mnt --strip-components=1
 rm arch-bootstrap.tar.gz
+cp -r /mnt/root.x86_64/* /mnt/
+rm -r /mnt/root.x86_64
 
 # Configurar fstab
 genfstab -U /mnt > /mnt/etc/fstab
