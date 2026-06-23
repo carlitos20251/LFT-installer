@@ -43,11 +43,10 @@ ensure_required_commands() {
     for c in "${missing[@]}"; do
         case "$c" in
             genfstab)
-                if [ "$pm" = "pacman" ]; then
-                    pkgs+=(arch-install-scripts)
-                else
-                    echo "Advertencia: 'genfstab' no es un paquete estándar fuera de Arch; omitiendo su instalación para $pm. Algunas funciones dependerán de genfstab y podrían fallar." >&2
-                fi
+                    case "$pm" in
+                    pacman) pkgs+=(arch-install-scripts) ;;
+                    emerge) pkgs+=(sys-fs/genfstab) ;;
+                    esac
                 ;;
             wget)
                 case "$pm" in
@@ -61,7 +60,7 @@ ensure_required_commands() {
                 case "$pm" in
                     pacman) pkgs+=(parted) ;;
                     apt) pkgs+=(parted) ;;
-                    emerge) pkgs+=(sys-fs/parted) ;;
+                    emerge) pkgs+=(sys-block/parted) ;;
                     dnf|yum) pkgs+=(parted) ;;
                 esac
                 ;;
@@ -88,7 +87,7 @@ ensure_required_commands() {
             ;;
         emerge)
             # Gentoo suele ejecutarse dentro del sistema construido; aquí intentamos instalar si emerge está disponible
-            emerge --quiet --ask=n "${pkgs[@]}"
+            emerge --quiet "${pkgs[@]}"
             ;;
         dnf)
             dnf install -y "${pkgs[@]}"
