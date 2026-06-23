@@ -3,6 +3,104 @@ set -e  # Salir si hay un error
 
 clear
 
+# --- Función: asegurar que comandos necesarios estén instalados ---
+# Intenta instalar los paquetes que contienen los comandos: genfstab, wget, parted
+# Compatible con: Arch (pacman), Debian/Ubuntu (apt), Gentoo (emerge), Fedora (dnf/yum)
+ensure_required_commands() {
+    local cmds=(genfstab wget parted)
+    local missing=()
+    for c in "${cmds[@]}"; do
+        if ! command -v "$c" >/dev/null 2>&1; then
+            missing+=("$c")
+        fi
+    done
+
+    if [ ${#missing[@]} -eq 0 ]; then
+        return 0
+    fi
+
+    echo -e "\n[!] Faltan comandos: ${missing[*]}\nIntentando instalarlos según el gestor de paquetes disponible..."
+
+    # Detectar gestor de paquetes
+    local pm=""
+    if command -v pacman >/dev/null 2>&1; then
+        pm="pacman"
+    elif command -v apt-get >/dev/null 2>&1; then
+        pm="apt"
+    elif command -v emerge >/dev/null 2>&1; then
+        pm="emerge"
+    elif command -v dnf >/dev/null 2>&1; then
+        pm="dnf"
+    elif command -v yum >/dev/null 2>&1; then
+        pm="yum"
+    else
+        echo "No se detectó un gestor de paquetes soportado. Instala manualmente: ${missing[*]}"
+        return 1
+    fi
+
+    # Mapear paquetes por gestor. genfstab está disponible en arch-install-scripts (Arch).
+    local pkgs=()
+    for c in "${missing[@]}"; do
+        case "$c" in
+            genfstab)
+                if [ "$pm" = "pacman" ]; then
+                    pkgs+=(arch-install-scripts)
+                else
+                    echo "Advertencia: 'genfstab' no es un paquete estándar fuera de Arch; omitiendo su instalación para $pm. Algunas funciones dependerán de genfstab y podrían fallar." >&2
+                fi
+                ;;
+            wget)
+                case "$pm" in
+                    pacman) pkgs+=(wget) ;;
+                    apt) pkgs+=(wget) ;;
+                    emerge) pkgs+=(net-misc/wget) ;;
+                    dnf|yum) pkgs+=(wget) ;;
+                esac
+                ;;
+            parted)
+                case "$pm" in
+                    pacman) pkgs+=(parted) ;;
+                    apt) pkgs+=(parted) ;;
+                    emerge) pkgs+=(sys-fs/parted) ;;
+                    dnf|yum) pkgs+=(parted) ;;
+                esac
+                ;;
+            *)
+                echo "No conozco cómo instalar '$c' automáticamente." ;;
+        esac
+    done
+
+    if [ ${#pkgs[@]} -eq 0 ]; then
+        echo "No hay paquetes conocidos para instalar. Revisa las advertencias anteriores." >&2
+        return 1
+    fi
+
+    echo "Gestor detectado: $pm. Paquetes a instalar: ${pkgs[*]}"
+
+    # Ejecutar instalación según gestor
+    case "$pm" in
+        pacman)
+            pacman -Sy --noconfirm "${pkgs[@]}"
+            ;;
+        apt)
+            apt-get update
+            DEBIAN_FRONTEND=noninteractive apt-get install -y "${pkgs[@]}"
+            ;;
+        emerge)
+            # Gentoo suele ejecutarse dentro del sistema construido; aquí intentamos instalar si emerge está disponible
+            emerge --quiet --ask=n "${pkgs[@]}"
+            ;;
+        dnf)
+            dnf install -y "${pkgs[@]}"
+            ;;
+        yum)
+            yum install -y "${pkgs[@]}"
+            ;;
+    esac
+
+    return 0
+}
+
 # --- Mensaje de advertencia ---
 cat << "EOF"
 ====================================
@@ -20,6 +118,9 @@ EOF
 
 read -rp "Escribe SI para continuar: " RESP
 [[ "$RESP" != "SI" ]] && exit 1
+
+# Intentar instalar dependencias necesarias si faltan
+ensure_required_commands || echo "Continuando aunque no se instalaron todas las dependencias; algunas operaciones pueden fallar."
 
 # --- Mostrar discos disponibles ---
 echo -e "\nDiscos disponibles:"
