@@ -2,13 +2,14 @@
 
 ## ¿Qué es LFT?
 
-LFT es una especie de "distribución", o más precisamente un instalador que permite desplegar sistemas Linux basados en bootstrap de forma sencilla.
+LFT, que por sus abreviaturas significa "Linux From Tallbar", es una especie de "distribución", o más precisamente un instalador que permite desplegar sistemas Linux basados en bootstrap de forma sencilla.
 
 Actualmente soporta:
 
 * Arch Linux
 * Gentoo
 * Debian
+- (Y proximamente Venom Linux tambien)
 
 El objetivo de LFT es proporcionar una forma simple de instalar distintas distribuciones desde una única herramienta basada en terminal.
 
