@@ -157,4 +157,6 @@ ID=lft
 VERSION_ID="1.1"
 EOF
 
-echo -e "\n[+] Instalación completada. Reinicia el sistema."
+echo -e "\n[+] Instalación completada. 
+-- Advertencia
+El sistema apenas esta en la etapa de bootstrap con agregados,por favor completar el resto manualmente."
