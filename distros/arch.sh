@@ -28,9 +28,9 @@ mount "${DISK}1" /mnt/boot
 echo -e "\n[+] Descargando bootstrap de Arch Linux..."
 BOOTSTRAP_URL="https://elmirror.cl/archlinux/iso/latest/archlinux-bootstrap-x86_64.tar.zst"
 cd /tmp
-wget -q --show-progress "$BOOTSTRAP_URL" -O arch-bootstrap.tar.gz
+wget -q --show-progress "$BOOTSTRAP_URL" -O arch-bootstrap.tar.zst
 echo -e "\n[+] Extrayendo bootstrap en /mnt..."
-tar -xvf arch-bootstrap-x86_64.tar.zst -C /mnt --strip-components=1
+tar -xvf arch-bootstrap.tar.zst -C /mnt --strip-components=1
 rm arch-bootstrap.tar.gz
 cp -r /mnt/root.x86_64/* /mnt/
 rm -r /mnt/root.x86_64
