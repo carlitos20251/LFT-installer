@@ -31,7 +31,7 @@ cd /tmp
 wget -q --show-progress "$BOOTSTRAP_URL" -O arch-bootstrap.tar.zst
 echo -e "\n[+] Extrayendo bootstrap en /mnt..."
 tar -xvf arch-bootstrap.tar.zst -C /mnt --strip-components=1
-rm arch-bootstrap.tar.gz
+rm arch-bootstrap.tar.zst
 cp -r /mnt/root.x86_64/* /mnt/
 rm -r /mnt/root.x86_64
 
