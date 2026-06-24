@@ -123,7 +123,7 @@ ensure_required_commands || echo "Continuando aunque no se instalaron todas las 
 
 # --- Mostrar discos disponibles ---
 echo -e "\nDiscos disponibles:"
-lsblk -d -o NAME,SIZE,MODEL,TRAN | grep -E "disk|nvme"
+lsblk -d -o NAME,SIZE,MODEL,TRAN | grep -E "disk|"
 echo
 
 read -rp "Disco destino (ej: sda, nvme0n1): " DISK
