@@ -153,6 +153,7 @@ select DISTRO in "Arch" "Gentoo" "Debian"; do
         Arch)   ./distros/arch.sh "$DISK"; break ;;
         Gentoo) ./distros/gentoo.sh "$DISK"; break ;;
         Debian) ./distros/debian.sh "$DISK"; break ;;
+        Venom) ./distros/venom.sh "$DISK"; break ;;
         *) echo "Opción no válida."; exit 1 ;;
     esac
 done
