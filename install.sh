@@ -66,9 +66,9 @@ ensure_required_commands() {
                 ;;
             debootstrap)
                 case "$pm" in
-                    pacman) pkgs+=(debootstrap)
-                    apt) pkgs+=(debootstrap)
-                    emerge) pkgs+=(dev-util/debootstrap)
+                    pacman) pkgs+=(debootstrap) ;;
+                    apt) pkgs+=(debootstrap) ;;
+                    emerge) pkgs+=(dev-util/debootstrap) ;;
                 esac
                ;;
             *)
