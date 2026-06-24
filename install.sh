@@ -7,7 +7,7 @@ clear
 # Intenta instalar los paquetes que contienen los comandos: genfstab, wget, parted
 # Compatible con: Arch (pacman), Debian/Ubuntu (apt), Gentoo (emerge), Fedora (dnf/yum)
 ensure_required_commands() {
-    local cmds=(genfstab wget parted)
+    local cmds=(genfstab wget parted debootstrap)
     local missing=()
     for c in "${cmds[@]}"; do
         if ! command -v "$c" >/dev/null 2>&1; then
@@ -64,6 +64,13 @@ ensure_required_commands() {
                     dnf|yum) pkgs+=(parted) ;;
                 esac
                 ;;
+            debootstrap)
+                case "$pm" in
+                    pacman) pkgs+=(debootstrap)
+                    apt) pkgs+=(debootstrap)
+                    emerge) pkgs+=(dev-util/debootstrap)
+                esac
+               ;;
             *)
                 echo "No conozco cómo instalar '$c' automáticamente." ;;
         esac
