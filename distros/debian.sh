@@ -26,7 +26,7 @@ mount "${DISK}1" /mnt/boot
 
 # --- Instalación de Debian ---
 echo -e "\n[+] Instalando Debian..."
-debootstrap --arch=amd64 bullseye /mnt http://deb.debian.org/debian/
+debootstrap --arch=amd64 stable /mnt http://deb.debian.org/debian/
 genfstab -U /mnt >> /mnt/etc/fstab
 chroot /mnt /bin/bash -c "
     apt update && apt install fastfetch
