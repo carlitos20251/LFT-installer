@@ -14,15 +14,23 @@ parted -s "$DISK" mklabel gpt
 parted -s "$DISK" mkpart primary fat32 1MiB 512MiB  # EFI
 parted -s "$DISK" mkpart primary ext4 512MiB 100%   # Raíz
 
+if [[ "$DISK" =~ nvme|mmcblk ]]; then
+    EFI="${DISK}p1"
+    ROOT="${DISK}p2"
+else
+    EFI="${DISK}1"
+    ROOT="${DISK}2"
+fi
+
 # Formatear particiones
-mkfs.fat -F32 "${DISK}1"
-mkfs.ext4 "${DISK}2"
+mkfs.fat -F32 "$EFI"
+mkfs.ext4 "$ROOT"
 
 # Montar particiones
 mkdir -p /mnt
-mount "${DISK}2" /mnt
+mount "$ROOT" /mnt
 mkdir -p /mnt/boot
-mount "${DISK}1" /mnt/boot
+mount "$EFI" /mnt/boot
 
 # --- Instalación de Arch Linux ---
 echo -e "\n[+] Descargando bootstrap de Arch Linux..."
