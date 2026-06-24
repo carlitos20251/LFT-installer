@@ -32,7 +32,7 @@ chmod +x distros/*
 Ejecuta el instalador:
 
 ```bash
-./install.sh
+sudo ./install.sh
 ```
 
 ## Advertencia
