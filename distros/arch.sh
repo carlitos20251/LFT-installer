@@ -44,6 +44,9 @@ arch-chroot /mnt /bin/bash << 'EOF'
     # Configurar contraseña de root
     echo 'root:toor' | chpasswd
     # Instalando paquetes esenciales
+    pacman-key --init
+    pacma-key --populate
+    pacman -Syy archlinux-keyring --noconfirm
     pacman -Syy fastfetch openssh networkmanager --noconfirm
     # Habilitar servicios
     systemctl enable sshd
