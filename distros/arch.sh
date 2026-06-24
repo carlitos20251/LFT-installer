@@ -47,7 +47,7 @@ arch-chroot /mnt /bin/bash << 'EOF'
     pacman-key --init
     pacma-key --populate
     pacman -Syy archlinux-keyring --noconfirm
-    pacman -Syy fastfetch openssh networkmanager --noconfirm
+    pacman -Syy fastfetch openssh networkmanager base base-devel linux --noconfirm
     # Habilitar servicios
     systemctl enable sshd
     systemctl enable systemd-networkd
