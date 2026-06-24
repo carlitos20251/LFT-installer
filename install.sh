@@ -148,7 +148,7 @@ read -rp "Confirmar (SI/NO): " CONFIRM
 
 # --- Seleccionar distribución ---
 PS3="Selecciona distribución: "
-select DISTRO in "Arch" "Gentoo" "Debian"; do
+select DISTRO in "Arch" "Gentoo" "Debian" "Venom"; do
     case $DISTRO in
         Arch)   ./distros/arch.sh "$DISK"; break ;;
         Gentoo) ./distros/gentoo.sh "$DISK"; break ;;
