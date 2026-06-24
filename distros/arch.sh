@@ -40,7 +40,7 @@ genfstab -U /mnt > /mnt/etc/fstab
 # Configurar sistema base (chroot)
 echo -e "\n[+] Configurando sistema base..."
 arch-chroot /mnt /bin/bash << 'EOF'
-    echo 'https://elmirror.cl/archlinux/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
+    echo 'Server = https://elmirror.cl/archlinux/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
     # Configurar contraseña de root
     echo 'root:toor' | chpasswd
     # Instalando paquetes esenciales
