@@ -160,9 +160,9 @@ done
 rm /mnt/etc/os-release
 cat > /mnt/etc/os-release << EOF
 NAME="Linux From Tallbar"
-PRETTY_NAME="LFT Beta 1.1 RC1 ($DISTRO Backend)"
+PRETTY_NAME="Linux From Tallbar 1.0 Stable ($DISTRO Based)"
 ID=lft
-VERSION_ID="1.1"
+VERSION_ID="1.0"
 EOF
 
 echo -e "\n[+] Instalación completada. 
