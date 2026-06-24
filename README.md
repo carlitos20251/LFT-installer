@@ -9,7 +9,7 @@ Actualmente soporta:
 * Arch Linux
 * Gentoo
 * Debian
-- (Y proximamente Venom Linux tambien)
+* Venom Linux
 
 El objetivo de LFT es proporcionar una forma simple de instalar distintas distribuciones desde una única herramienta basada en terminal.
 
